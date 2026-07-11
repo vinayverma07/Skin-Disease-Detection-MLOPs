@@ -9,28 +9,28 @@ data_ingestion:
 
 data_validation:
   root_dir: artifacts/data_validation
-  unzip_data_dir: artifacts/data_ingestion/dataset
+  unzip_data_dir: artifacts/data_ingestion/dataset/train
   STATUS_FILE: artifacts/data_validation/status.txt
   all_classes:
     - Acne
     - Bullous
-    - Actinic Keratosis
-    - Benign Tumors
+    - Actinic_Keratosis
+    - Benign_tumors
     - Candidiasis
-    - Drug Eruption
+    - DrugEruption
     - Eczema
-    - Infestations/Bites
+    - Infestations_Bites
     - Lichen
     - Lupus
     - Moles
-    -  Psoriasis
+    - Psoriasis
     - Rosacea
-    - Seborrheic Keratoses
-    - Skin Cancer
-    - Sun/Sunlight Damage
+    - Seborrh_Keratoses
+    - SkinCancer
+    - Sun_Sunlight_Damage
     - Tinea
-    - Unknown/Normal
-    - Vascular Tumors
+    - Unknown_Normal
+    - Vascular_Tumors
     - Vasculitis
     - Vitiligo
     - Warts
