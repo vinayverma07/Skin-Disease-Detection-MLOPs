@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Skin Disease Classification System</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 650px; margin: 50px auto; text-align: center; background-color: #f8fafc; color: #334155; }
+        .container { background: white; padding: 40px 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        h2 { color: #0f172a; margin-top: 0; }
+        p { color: #64748b; font-size: 15px; line-height: 1.5; }
+        .upload-area { border: 2px dashed #cbd5e1; padding: 25px; border-radius: 8px; background: #f8fafc; margin: 25px 0; cursor: pointer; transition: all 0.3s ease; }
+        .upload-area:hover { border-color: #3b82f6; background: #eff6ff; }
+        input[type="file"] { display: none; }
+        .file-label { font-weight: 500; color: #3b82f6; cursor: pointer; display: block; }
+        #fileNameDisplay { margin-top: 10px; font-size: 13px; color: #64748b; font-style: italic; }
+        button { background: #2563eb; color: white; padding: 12px 28px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600; width: 100%; transition: background 0.2s ease; }
+        button:hover { background: #1d4ed8; }
+        #resultBox { margin-top: 30px; padding: 20px; border-radius: 8px; display: none; font-size: 16px; line-height: 1.6; border: 1px solid transparent; }
+        .diagnosis-title { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Dermatological Image Analysis</h2>
+        <p>Upload a clear, well-lit, macroscopic photograph of the skin lesion to execute the 22-class model pipeline classification.</p>
+        
+        <form id="uploadForm">
+            <div class="upload-area" onclick="document.getElementById('imageFile').click()">
+                <label for="imageFile" class="file-label" onclick="event.stopPropagation();">
+                    Click to browse or drop skin lesion image here
+                </label>
+                <input type="file" id="imageFile" accept="image/*" required>
+                <div id="fileNameDisplay">No file selected</div>
+            </div>
+            <button type="submit">Analyze Image</button>
+        </form>
+
+        <div id="resultBox"></div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('imageFile');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const resultBox = document.getElementById('resultBox');
+
+        // Update display text when a file is chosen
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileNameDisplay.innerText = `Selected: ${e.target.files[0].name}`;
+            } else {
+                fileNameDisplay.innerText = "No file selected";
+            }
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (fileInput.files.length === 0) return;
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            // Set loading display state
+            resultBox.style.display = 'block';
+            resultBox.style.background = '#f1f5f9';
+            resultBox.style.borderColor = '#cbd5e1';
+            resultBox.style.color = '#334155';
+            resultBox.innerHTML = "<div><strong>Processing analysis layers...</strong></div><small style='color:#64748b;'>Extracting texture and morphology features from cached model graph</small>";
+
+            try {
+                // Post form content directly to your inference pipeline endpoint
+                const response = await fetch('/predict', { method: 'POST', body: formData });
+                const data = await response.json();
+                
+                if (data.error) {
+                    resultBox.style.background = '#fef2f2';
+                    resultBox.style.borderColor = '#fca5a5';
+                    resultBox.style.color = '#991b1b';
+                    resultBox.innerText = "Pipeline Error: " + data.error;
+                } else {
+                    // Success layout matching your 22-class PredictionPipeline payload schema
+                    resultBox.style.background = '#f0fdf4';
+                    resultBox.style.borderColor = '#bbf7d0';
+                    resultBox.style.color = '#166534';
+                      // <div>Inference Confidence: <strong>${data.confidence}</strong></div>
+                    resultBox.innerHTML = `
+                        <div class="diagnosis-title">Analysis Completed</div>
+                        <div>Predicted Condition: <strong>${data.prediction}</strong></div>
+                      
+                        <div style="font-size: 12px; margin-top: 8px; color: #16a34a;">Class Map ID: Index ${data.class_index}</div>
+                    `;
+                }
+            } catch (err) {
+                resultBox.style.background = '#fef2f2';
+                resultBox.style.borderColor = '#fca5a5';
+                resultBox.style.color = '#991b1b';
+                resultBox.innerText = "Failed to establish communication with backend MLOps engine.";
+            }
+        });
+    </script>
+</body>
+</html>
