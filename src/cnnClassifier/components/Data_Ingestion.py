@@ -70,7 +70,7 @@ class DataIngestion:
 
         Final Structure:
 
-     artifacts/data/
+        artifacts/data/
         ├── train/
         │   ├── Acne/
         │   ├── Actinic_Keratosis/
@@ -78,10 +78,10 @@ class DataIngestion:
         │   └── Warts/
         │
         └── test/
-        ├── Acne/
-        ├── Actinic_Keratosis/
-        ├── ...
-        └── Warts/
+            ├── Acne/
+            ├── Actinic_Keratosis/
+            ├── ...
+            └── Warts/
         """
 
         logger.info("Restructuring Skin Disease dataset...")
@@ -102,57 +102,67 @@ class DataIngestion:
                 test_dir = path
                 break
 
-            if train_dir is None or test_dir is None:
-                raise FileNotFoundError(
+        if train_dir is None or test_dir is None:
+            raise FileNotFoundError(
                 "Could not locate Train/Test folders in extracted dataset."
             )
 
-            final_root = Path(self.config.final_dataset_dir)
+        final_root = Path(self.config.final_dataset_dir)
 
-            final_train = final_root / "train"
-            final_test = final_root / "test"
+        final_train = final_root / "train"
+        final_test = final_root / "test"
 
-            final_train.mkdir(parents=True, exist_ok=True)
-            final_test.mkdir(parents=True, exist_ok=True)
+        final_train.mkdir(parents=True, exist_ok=True)
+        final_test.mkdir(parents=True, exist_ok=True)
 
-    # -------------------------
-    # Copy Train Images
-    # -------------------------
-            logger.info("Copying training images...")
+        # -------------------------
+        # Copy Train Images
+        # -------------------------
+        logger.info("Copying training images...")
 
-            for class_dir in train_dir.iterdir():
+        for class_dir in train_dir.iterdir():
 
-                if not class_dir.is_dir():
-                    continue
+            if not class_dir.is_dir():
+                continue
 
-                destination = final_train / class_dir.name
-                destination.mkdir(parents=True, exist_ok=True)
-
-            for img in class_dir.iterdir():
-
-                if img.suffix.lower() in [".jpg", ".jpeg", ".png", ".bmp", ".webp"]:
-
-                    shutil.copy2(img, destination / img.name)
-
-    # -------------------------
-    # Copy Test Images
-    # -------------------------
-            logger.info("Copying testing images...")
-
-            for class_dir in test_dir.iterdir():
-
-                if not class_dir.is_dir():
-                    continue
-
-                destination = final_test / class_dir.name
-                destination.mkdir(parents=True, exist_ok=True)
+            destination = final_train / class_dir.name
+            destination.mkdir(parents=True, exist_ok=True)
 
             for img in class_dir.iterdir():
 
-                if img.suffix.lower() in [".jpg", ".jpeg", ".png", ".bmp", ".webp"]:
-
+                if img.is_file() and img.suffix.lower() in [
+                    ".jpg",
+                    ".jpeg",
+                    ".png",
+                    ".bmp",
+                    ".webp",
+                ]:
                     shutil.copy2(img, destination / img.name)
 
-            logger.info("Dataset restructuring completed.")
+        # -------------------------
+        # Copy Test Images
+        # -------------------------
+        logger.info("Copying testing images...")
 
-         
+        for class_dir in test_dir.iterdir():
+
+            if not class_dir.is_dir():
+                continue
+
+            destination = final_test / class_dir.name
+            destination.mkdir(parents=True, exist_ok=True)
+
+            for img in class_dir.iterdir():
+
+                if img.is_file() and img.suffix.lower() in [
+                    ".jpg",
+                    ".jpeg",
+                    ".png",
+                    ".bmp",
+                    ".webp",
+                ]:
+                    shutil.copy2(img, destination / img.name)
+
+        logger.info("Dataset restructuring completed.")
+
+        
