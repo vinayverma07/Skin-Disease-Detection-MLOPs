@@ -38,3 +38,15 @@ class TrainingConfig:
     params_is_augmentation: bool
     params_image_size: list
     params_classes: int
+
+
+@dataclass(frozen=True)
+class EvaluationConfig:
+    root_dir: Path
+    test_data_path: Path
+    model_path: Path
+    history_path: Path
+    plots_dir: Path
+    mlflow_uri: str
+    params_image_size: list
+    params_batch_size: int
