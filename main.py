@@ -1,10 +1,10 @@
-from src.cnnClassifier import logger
-from src.cnnClassifier.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline
-from src.cnnClassifier.pipeline.stage_02_data_validation import DataValidationTrainingPipeline
-from src.cnnClassifier.pipeline.stage_03_data_transformation import DataTransformationTrainingPipeline 
-from src.cnnClassifier.pipeline.stage_04_model_training import ModelTrainingPipeline
+from cnnClassifier import logger
+from cnnClassifier.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline
+from cnnClassifier.pipeline.stage_02_data_validation import DataValidationTrainingPipeline
+from cnnClassifier.pipeline.stage_03_data_transformation import DataTransformationTrainingPipeline 
+from cnnClassifier.pipeline.stage_04_model_training import ModelTrainingPipeline
 from cnnClassifier.pipeline.stage_05_model_evaluation import ModelEvaluationPipeline
-from src.cnnClassifier.exception import CustomException
+from cnnClassifier.exception import CustomException
 import sys
 
 

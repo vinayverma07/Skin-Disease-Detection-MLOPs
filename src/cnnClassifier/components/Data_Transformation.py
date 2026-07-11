@@ -1,8 +1,8 @@
 import os
 import tensorflow as tf
 from pathlib import Path
-from src.cnnClassifier import logger
-from src.cnnClassifier.config.configuration import DataTransformationConfig
+from cnnClassifier import logger
+from cnnClassifier.config.configuration import DataTransformationConfig
 
 class DataTransformation:
     def __init__(self, config: DataTransformationConfig):

@@ -2,8 +2,8 @@ import os
 from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 from tensorflow.keras.models import load_model
-from src.cnnClassifier.pipeline.prediction import PredictionPipeline
-from src.cnnClassifier import logger
+from cnnClassifier.pipeline.prediction import PredictionPipeline
+from cnnClassifier import logger
 
 app = Flask(__name__)
 CORS(app)

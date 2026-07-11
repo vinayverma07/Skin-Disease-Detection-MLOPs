@@ -1,5 +1,5 @@
 import sys
-from src.cnnClassifier import logger
+from cnnClassifier import logger
 
 def error_message_detail(error, error_detail: sys):
     """

@@ -1,7 +1,7 @@
-from src.cnnClassifier.config.configuration import ConfigurationManager
-from src.cnnClassifier.components.Model_Evaluation import ModelEvaluation
-from src.cnnClassifier import logger
-from src.cnnClassifier.exception import CustomException
+from cnnClassifier.config.configuration import ConfigurationManager
+from cnnClassifier.components.Model_Evaluation import ModelEvaluation
+from cnnClassifier import logger
+from cnnClassifier.exception import CustomException
 import sys
 
 STAGE_NAME = "Model Evaluation Stage"

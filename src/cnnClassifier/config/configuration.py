@@ -1,10 +1,10 @@
-from src.cnnClassifier.constants import *
-from src.cnnClassifier.utils.common import read_yaml, create_directories
-from src.cnnClassifier.entity.config_entity import DataIngestionConfig
-from src.cnnClassifier.entity.config_entity import DataValidationConfig
-from src.cnnClassifier.entity.config_entity import DataTransformationConfig
-from src.cnnClassifier.entity.config_entity import TrainingConfig
-from src.cnnClassifier.entity.config_entity import EvaluationConfig
+from cnnClassifier.constants import *
+from cnnClassifier.utils.common import read_yaml, create_directories
+from cnnClassifier.entity.config_entity import DataIngestionConfig
+from cnnClassifier.entity.config_entity import DataValidationConfig
+from cnnClassifier.entity.config_entity import DataTransformationConfig
+from cnnClassifier.entity.config_entity import TrainingConfig
+from cnnClassifier.entity.config_entity import EvaluationConfig
 
 class ConfigurationManager:
     def __init__(

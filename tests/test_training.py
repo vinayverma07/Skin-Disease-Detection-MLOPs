@@ -2,11 +2,11 @@ import os
 import pytest
 from pathlib import Path
 from tensorflow.keras.models import load_model
-from src.cnnClassifier.config.configuration import ConfigurationManager
+from cnnClassifier.config.configuration import ConfigurationManager
 # Ensure this import matches your exact file structure
 from model_architecture.model1_architecture import build_model 
-from src.cnnClassifier.pipeline.prediction import PredictionPipeline
-from src.cnnClassifier import logger
+from cnnClassifier.pipeline.prediction import PredictionPipeline
+from cnnClassifier import logger
 
 # 1. Test Data Integrity Gate
 def test_data_validation_status():

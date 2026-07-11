@@ -3,9 +3,9 @@ import shutil
 import zipfile
 from pathlib import Path
 from dotenv import load_dotenv
-from src.cnnClassifier import logger
-from src.cnnClassifier.utils.common import get_size
-from src.cnnClassifier.entity.config_entity import DataIngestionConfig
+from cnnClassifier import logger
+from cnnClassifier.utils.common import get_size
+from cnnClassifier.entity.config_entity import DataIngestionConfig
 
 
 # Load environment variables from the .env file BEFORE importing kaggle
