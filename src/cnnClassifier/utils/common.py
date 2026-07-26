@@ -1,14 +1,14 @@
 import os
 from box.exceptions import BoxValueError
 import yaml
-from src.cnnClassifier import logger
+from cnnClassifier import logger
 import json
 import joblib
 from ensure import ensure_annotations
 from box import ConfigBox
 from pathlib import Path
 from typing import Any
-from src.cnnClassifier.exception import CustomException
+from cnnClassifier.exception import CustomException
 import sys
 
 @ensure_annotations

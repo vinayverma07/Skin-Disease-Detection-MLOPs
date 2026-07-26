@@ -23,7 +23,7 @@ def test_model_architecture_compilation():
     input_shape = tuple(transformation_config.params_image_size)
     
     # Updated to 22 classes for the skin disease project
-    classes = 22 
+    classes = 3
     
     model = build_model(input_shape=input_shape, classes=classes, learning_rate=0.0001)
     assert model is not None

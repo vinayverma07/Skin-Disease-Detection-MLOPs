@@ -1,5 +1,5 @@
 import tensorflow as tf
-from src.cnnClassifier import logger
+from cnnClassifier import logger
 from tensorflow.keras import layers, models
 
 def build_model(self, num_classes: int) -> tf.keras.Model:

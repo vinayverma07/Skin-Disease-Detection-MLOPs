@@ -1,6 +1,6 @@
 import os
-from src.cnnClassifier import logger
-from src.cnnClassifier.entity.config_entity import DataValidationConfig
+from cnnClassifier import logger
+from cnnClassifier.entity.config_entity import DataValidationConfig
 
 class DataValidation:
     def __init__(self, config: DataValidationConfig):

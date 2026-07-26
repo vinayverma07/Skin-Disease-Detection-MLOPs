@@ -7,9 +7,9 @@ import mlflow.keras
 from pathlib import Path
 from dotenv import load_dotenv
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score
-from src.cnnClassifier import logger
-from src.cnnClassifier.entity.config_entity import EvaluationConfig
-from src.cnnClassifier.utils.visualization import generate_training_curves, generate_confusion_matrix_plot
+from cnnClassifier import logger
+from cnnClassifier.entity.config_entity import EvaluationConfig
+from cnnClassifier.utils.visualization import generate_training_curves, generate_confusion_matrix_plot
 import dagshub
 
 load_dotenv()

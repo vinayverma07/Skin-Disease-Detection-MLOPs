@@ -1,7 +1,7 @@
-from src.cnnClassifier.config.configuration import ConfigurationManager
-from src.cnnClassifier.components.Model_Trainer import ModelTrainer
-from src.cnnClassifier import logger
-from src.cnnClassifier.exception import CustomException
+from cnnClassifier.config.configuration import ConfigurationManager
+from cnnClassifier.components.Model_Trainer import ModelTrainer
+from cnnClassifier import logger
+from cnnClassifier.exception import CustomException
 import sys
 
 STAGE_NAME = "Model Training Stage"

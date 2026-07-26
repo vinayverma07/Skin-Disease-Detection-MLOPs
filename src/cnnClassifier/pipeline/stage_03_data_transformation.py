@@ -1,7 +1,7 @@
-from src.cnnClassifier.config.configuration import ConfigurationManager
-from src.cnnClassifier.components.Data_Transformation import DataTransformation 
-from src.cnnClassifier import logger
-from src.cnnClassifier.exception import CustomException
+from cnnClassifier.config.configuration import ConfigurationManager
+from cnnClassifier.components.Data_Transformation import DataTransformation 
+from cnnClassifier import logger
+from cnnClassifier.exception import CustomException
 import sys
 
 STAGE_NAME = "Data Transformation Stage"

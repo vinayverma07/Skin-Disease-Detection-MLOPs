@@ -1,7 +1,7 @@
 import tensorflow as tf
 from pathlib import Path
-from src.cnnClassifier import logger
-from src.cnnClassifier.entity.config_entity import TrainingConfig
+from cnnClassifier import logger
+from cnnClassifier.entity.config_entity import TrainingConfig
 from model_architecture.model1_architecture import build_model
 import os
 import json
