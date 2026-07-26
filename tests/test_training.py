@@ -3,41 +3,45 @@ import pytest
 from pathlib import Path
 from tensorflow.keras.models import load_model
 from cnnClassifier.config.configuration import ConfigurationManager
-# Ensure this import matches your exact file structure
-from model_architecture.model1_architecture import build_model 
 from cnnClassifier.pipeline.prediction import PredictionPipeline
+from cnnClassifier.components.model_trainer import ModelTrainer
 from cnnClassifier import logger
+
 
 # 1. Test Data Integrity Gate
 def test_data_validation_status():
     status_file_path = Path("artifacts/data_validation/status.txt")
     assert status_file_path.exists(), "Data validation status file missing."
+    
     with open(status_file_path, "r") as f:
         status = f.read().split(":")[-1].strip()
+        
     assert status == "True", "Data validation failed!"
 
+
 # 2. Test Model Compilation and Tensor Shapes for 3 Classes
-def test_model_architecture_compilation(self):
+def test_model_architecture_compilation():
     config_manager = ConfigurationManager()
-    transformation_config = config_manager.get_data_transformation_config()
-    input_shape = tuple(transformation_config.params_image_size)
+    model_trainer_config = config_manager.get_model_trainer_config()
     
-    # Updated to 3 classes for the skin disease project
+    # Brain Cancer Dataset has 3 classes (brain_glioma, brain_menin, brain_tumor)
     classes = 3
     
-    model = build_model(self,num_classes=classes)
-    assert model is not None
-    assert model.output_shape == (None, classes), f"Expected output shape (None, 22), got {model.output_shape}"
+    trainer = ModelTrainer(config=model_trainer_config)
+    model = trainer.build_model(num_classes=classes)
+    
+    assert model is not None, "Model failed to build."
+    assert model.output_shape == (None, classes), f"Expected output shape (None, {classes}), got {model.output_shape}"
+
 
 # 3. Inference Pipeline Sanity Check
 def test_prediction_pipeline_sanity():
     """
-    Verifies that the inference engine can successfully ingest an image,
+    Verifies that the inference engine can successfully ingest a brain MRI image,
     preprocess it, and return a valid structural dictionary prediction
-    across the 22 skin disease classes.
+    across the 3 brain cancer classes.
     """
-    # Updated sample image name to match a typical skin lesion sample file
-    sample_img_path = "tests/sample_data/lesion_sample.jpg" 
+    sample_img_path = "tests/sample_data/brain_mri_sample.jpg" 
     model_path = "artifacts/training/model.keras"
     
     # Skip the test if structural dependencies are missing locally
@@ -54,12 +58,12 @@ def test_prediction_pipeline_sanity():
     predictor = PredictionPipeline(filename=sample_img_path, model=trained_model)
     result = predictor.predict()
     
-    # Structural assertions matching the new 22-class pipeline schema
+    # Structural assertions matching the 3-class brain cancer pipeline schema
     assert isinstance(result, dict), "Prediction output should be a dictionary."
     assert "prediction" in result, "Prediction key missing from output."
     assert "confidence" in result, "Confidence key missing from output."
     assert "class_index" in result, "Class index key missing from output."
     assert isinstance(result["class_index"], int), "Class index must be an integer."
-    assert 0 <= result["class_index"] < 22, f"Class index {result['class_index']} is out of bounds for 22 classes."
+    assert 0 <= result["class_index"] < 3, f"Class index {result['class_index']} is out of bounds for 3 classes."
     
-    logger.info("Pytest Gate: Container inference verification successful for skin disease model.")
+    logger.info("Pytest Gate: Container inference verification successful for brain cancer model.")
