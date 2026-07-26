@@ -6,9 +6,7 @@ from cnnClassifier import logger
 class PredictionPipeline:
     def __init__(self, filename, model, target_size=(224, 224)):
         """
-        Initializes the pipeline for 22-class skin disease inference.
-        Note: EfficientNetB3 performs best at (300, 300). Adjust target_size 
-        to match your exact configuration if different.
+        Initializes the pipeline for 3-class Brain Cancer inference.
         """
         self.filename = filename
         self.model = model  # Pass the pre-loaded global model here
@@ -17,32 +15,14 @@ class PredictionPipeline:
         # Define the exact names of your 22 classes.
         # CRITICAL: Order these exactly matching how your Data Generator sorted the folders.
         self.class_mapping = {
-            0: "Actinic Keratosis",
-            1: "Basal Cell Carcinoma",
-            2: "Dermatofibroma",
-            3: "Melanoma",
-            4: "Nevus",
-            5: "Squamous Cell Carcinoma",
-            6: "Vascular Lesion",
-            7: "Atopic Dermatitis",
-            8: "Eczema",
-            9: "Psoriasis",
-            10: "Seborrheic Keratosis",
-            11: "Tinea Ringworm",
-            12: "Warts Molluscum",
-            13: "Urticaria Hives",
-            14: "Impetigo",
-            15: "Acne Vulgaris",
-            16: "Rosacea",
-            17: "Lichen Planus",
-            18: "Lupus Erythematosus",
-            19: "Vitiligo",
-            20: "Shingles Herpes Zoster",
-            21: "Chickenpox"
+            0: "Brain Glioma",
+            1: "Brain Menin",
+            2: "Brain Tumor",
+           
         }
 
     def predict(self):
-        logger.info("Executing skin disease classification from model cache...")
+        logger.info("Executing Brain Cancer classification from model cache...")
         
         # 1. Preprocess image
         # EfficientNet models handle rescaling internally inside Keras, 
@@ -64,7 +44,7 @@ class PredictionPipeline:
         # 3. Resolve the label name securely from dictionary
         prediction_label = self.class_mapping.get(
             predicted_class_idx, 
-            f"Unknown Skin Condition (Index {predicted_class_idx})"
+            f"Unknown Brain Condition (Index {predicted_class_idx})"
         )
 
         logger.info(f"Prediction calculated: {prediction_label} ({confidence:.2%})")
