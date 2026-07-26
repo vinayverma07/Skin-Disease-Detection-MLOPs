@@ -69,7 +69,7 @@ class ConfigurationManager:
     
     def get_training_config(self) -> TrainingConfig:
             config = self.config.training
-            params = self.para
+            params = self.params
             create_directories([config.root_dir])
     
             training_config = TrainingConfig(
