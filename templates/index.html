@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Skin Disease Classification System</title>
+    <title>Advanced  Brain Cancer Classification System</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 650px; margin: 50px auto; text-align: center; background-color: #f8fafc; color: #334155; }
         .container { background: white; padding: 40px 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
@@ -22,13 +22,13 @@
 </head>
 <body>
     <div class="container">
-        <h2>Dermatological Image Analysis</h2>
-        <p>Upload a clear, well-lit, macroscopic photograph of the skin lesion to execute the 22-class model pipeline classification.</p>
+        <h2>Brain Cancer Analysis</h2>
+        <p>Upload a clear, well-lit, macroscopic photograph of the Brain X-ray to execute the 3-class model pipeline classification.</p>
         
         <form id="uploadForm">
             <div class="upload-area" onclick="document.getElementById('imageFile').click()">
                 <label for="imageFile" class="file-label" onclick="event.stopPropagation();">
-                    Click to browse or drop skin lesion image here
+                    Click to browse or drop image here
                 </label>
                 <input type="file" id="imageFile" accept="image/*" required>
                 <div id="fileNameDisplay">No file selected</div>
@@ -83,10 +83,12 @@
                     resultBox.style.background = '#f0fdf4';
                     resultBox.style.borderColor = '#bbf7d0';
                     resultBox.style.color = '#166534';
-                      // <div>Inference Confidence: <strong>${data.confidence}</strong></div>
+                      // 
                     resultBox.innerHTML = `
                         <div class="diagnosis-title">Analysis Completed</div>
                         <div>Predicted Condition: <strong>${data.prediction}</strong></div>
+                        <div>Inference Confidence: <strong>${data.confidence}</strong></div>
+
                       
                         <div style="font-size: 12px; margin-top: 8px; color: #16a34a;">Class Map ID: Index ${data.class_index}</div>
                     `;

@@ -16,16 +16,16 @@ def test_data_validation_status():
         status = f.read().split(":")[-1].strip()
     assert status == "True", "Data validation failed!"
 
-# 2. Test Model Compilation and Tensor Shapes for 22 Classes
-def test_model_architecture_compilation():
+# 2. Test Model Compilation and Tensor Shapes for 3 Classes
+def test_model_architecture_compilation(self):
     config_manager = ConfigurationManager()
     transformation_config = config_manager.get_data_transformation_config()
     input_shape = tuple(transformation_config.params_image_size)
     
-    # Updated to 22 classes for the skin disease project
+    # Updated to 3 classes for the skin disease project
     classes = 3
     
-    model = build_model(input_shape=input_shape, classes=classes, learning_rate=0.0001)
+    model = build_model(self,num_classes=classes)
     assert model is not None
     assert model.output_shape == (None, classes), f"Expected output shape (None, 22), got {model.output_shape}"
 
