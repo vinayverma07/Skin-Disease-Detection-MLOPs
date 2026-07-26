@@ -7,9 +7,9 @@ import mlflow.keras
 from pathlib import Path
 from dotenv import load_dotenv
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score
-from cnnClassifier import logger
-from cnnClassifier.entity.config_entity import EvaluationConfig
-from cnnClassifier.utils.visualization import generate_training_curves, generate_confusion_matrix_plot
+from src.cnnClassifier import logger
+from src.cnnClassifier.entity.config_entity import EvaluationConfig
+from src.cnnClassifier.utils.visualization import generate_training_curves, generate_confusion_matrix_plot
 import dagshub
 
 load_dotenv()
@@ -67,7 +67,7 @@ class ModelEvaluation:
         params_dict = {
             "image_size": str(self.config.params_image_size),  # Convert list to string for MLflow compatibility
             "batch_size": self.config.params_batch_size,
-            "num_classes": 22
+            "num_classes": 3
         }
 
         # 4. Invoke Isolated Plotting Module

@@ -2,38 +2,19 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://www.kaggle.com/datasets/pacificrm/skindiseasedataset
+  source_URL: https://www.kaggle.com/datasets/orvile/brain-cancer-mri-dataset
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion/raw_extracted
   final_dataset_dir: artifacts/data_ingestion/dataset
 
 data_validation:
   root_dir: artifacts/data_validation
-  unzip_data_dir: artifacts/data_ingestion/dataset/train
+  unzip_data_dir: artifacts/data_ingestion/dataset
   STATUS_FILE: artifacts/data_validation/status.txt
   all_classes:
-    - Acne
-    - Bullous
-    - Actinic_Keratosis
-    - Benign_tumors
-    - Candidiasis
-    - DrugEruption
-    - Eczema
-    - Infestations_Bites
-    - Lichen
-    - Lupus
-    - Moles
-    - Psoriasis
-    - Rosacea
-    - Seborrh_Keratoses
-    - SkinCancer
-    - Sun_Sunlight_Damage
-    - Tinea
-    - Unknown_Normal
-    - Vascular_Tumors
-    - Vasculitis
-    - Vitiligo
-    - Warts
+    - brain_glioma
+    - brain_menin
+    - brain_tumor
 
 data_transformation:
   root_dir: artifacts/data_transformation

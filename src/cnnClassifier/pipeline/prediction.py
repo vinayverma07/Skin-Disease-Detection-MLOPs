@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from tensorflow.keras.utils import load_img, img_to_array
-from cnnClassifier import logger
+from src.cnnClassifier import logger
 
 class PredictionPipeline:
     def __init__(self, filename, model, target_size=(224, 224)):

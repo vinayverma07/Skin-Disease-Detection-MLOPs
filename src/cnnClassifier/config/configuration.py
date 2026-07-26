@@ -1,10 +1,10 @@
-from cnnClassifier.constants import *
-from cnnClassifier.utils.common import read_yaml, create_directories
-from cnnClassifier.entity.config_entity import DataIngestionConfig
-from cnnClassifier.entity.config_entity import DataValidationConfig
-from cnnClassifier.entity.config_entity import DataTransformationConfig
-from cnnClassifier.entity.config_entity import TrainingConfig
-from cnnClassifier.entity.config_entity import EvaluationConfig
+from src.cnnClassifier.constants import *
+from src.cnnClassifier.utils.common import read_yaml, create_directories
+from src.cnnClassifier.entity.config_entity import DataIngestionConfig
+from src.cnnClassifier.entity.config_entity import DataValidationConfig
+from src.cnnClassifier.entity.config_entity import DataTransformationConfig
+from src.cnnClassifier.entity.config_entity import TrainingConfig
+from src.cnnClassifier.entity.config_entity import EvaluationConfig
 
 class ConfigurationManager:
     def __init__(
@@ -68,24 +68,26 @@ class ConfigurationManager:
         return data_transformation_config
     
     def get_training_config(self) -> TrainingConfig:
-        config = self.config.training
-        params = self.params
-
-        create_directories([config.root_dir])
-
-        training_config = TrainingConfig(
-            root_dir=Path(config.root_dir),
-            trained_model_path= Path(config.trained_model_path),
-            training_data= Path(config.training_data),
-            val_data=Path(config.val_data),
-            params_epochs= params.EPOCHS,
-            params_batch_size= params.BATCH_SIZE,
-            params_is_augmentation= params.AUGMENTATION,
-            params_image_size= params.IMAGE_SIZE,
-            params_classes= params.CLASSES    
-        )
-
-        return training_config
+            config = self.config.training
+            params = self.params
+    
+            create_directories([config.root_dir])
+    
+            training_config = TrainingConfig(
+                root_dir=Path(config.root_dir),
+                # Migrating to the modern .keras extension to remove the legacy HDF5 warning
+                trained_model_path= Path(config.trained_model_path),
+                training_data= Path(config.training_data),
+                val_data=Path(config.val_data),
+                params_epochs= params.EPOCHS,
+                params_batch_size= params.BATCH_SIZE,
+                params_is_augmentation= params.AUGMENTATION,
+                params_image_size= params.IMAGE_SIZE,
+                params_classes= params.CLASSES,
+                params_learning_rate=params.LEARNING_RATE 
+            )
+    
+            return training_config
     
 
     def get_evaluation_config(self) -> EvaluationConfig:

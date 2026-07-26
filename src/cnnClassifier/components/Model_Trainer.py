@@ -1,7 +1,7 @@
 import tensorflow as tf
 from pathlib import Path
-from cnnClassifier import logger
-from cnnClassifier.entity.config_entity import TrainingConfig
+from src.cnnClassifier import logger
+from src.cnnClassifier.entity.config_entity import TrainingConfig
 from model_architecture.model1_architecture import build_model
 import os
 import json
@@ -12,32 +12,50 @@ class ModelTrainer:
         self.config = config
 
     def train(self):
-        # 1. Load the transformed datasets (Training & Validation)
+        """
+        Loads transformed datasets and trains the model.
+        """
+        logger.info("Loading transformed training and validation datasets...")
+
+        # Load saved tf.data.Dataset objects from data transformation
         train_ds = tf.data.Dataset.load(str(self.config.training_data))
         val_ds = tf.data.Dataset.load(str(self.config.val_data))
-        
-        # 2. Build the state-of-the-art model
-        # Recommended image dimensions for EfficientNetB3 are (300, 300, 3) 
-        # Make sure to set IMAGE_SIZE: [300, 300, 3] in your params.yaml if possible
-        model = build_model(
-            input_shape=tuple(self.config.params_image_size),
-            classes=self.config.params_classes,
-            learning_rate=0.0001  # Lowered slightly for stable transfer learning
-        )
-        
-        # 3. Fit the model and capture training execution history
+
+        # Dynamically calculate class count from one-hot target shape
+        for _, labels in train_ds.take(1):
+            num_classes = labels.shape[-1]
+            break
+
+        logger.info(f"Detected {num_classes} output classes.")
+
+        model = build_model(self,num_classes=num_classes)
+
+        logger.info("Starting model training...")
+
+        # Callbacks for best model saving and early stopping
+        callbacks = [
+            tf.keras.callbacks.ModelCheckpoint(
+                filepath=str(self.config.trained_model_path),
+                save_best_only=True,
+                monitor="val_loss",
+                mode="min"
+            ),
+            tf.keras.callbacks.EarlyStopping(
+                monitor="val_loss",
+                patience=5,
+                restore_best_weights=True
+            )
+        ]
+
+        # Model fit
         history = model.fit(
-            train_ds, 
-            validation_data=val_ds, 
-            epochs=self.config.params_epochs
+            train_ds,
+            validation_data=val_ds,
+            epochs=self.config.params_epochs,
+            callbacks=callbacks
         )
 
-        # Save history dictionary as json file
-        history_path = os.path.join(self.config.root_dir, "history.json")
-        with open(history_path, "w") as f:
-            json.dump(history.history, f)
-        logger.info(f"Training history metrics successfully saved to {history_path}")
-        
-        # 4. Save model using native Keras v3 format
-        model.save(self.config.trained_model_path)
-        logger.info(f"Model successfully saved to {self.config.trained_model_path}")
+        logger.info(f"Saving final trained model to: {self.config.trained_model_path}")
+        model.save(str(self.config.trained_model_path))
+
+        logger.info("Model training stage completed successfully.")
