@@ -22,7 +22,7 @@ def test_data_validation_status():
 # 2. Test Model Compilation and Tensor Shapes for 3 Classes
 def test_model_architecture_compilation():
     config_manager = ConfigurationManager()
-    model_trainer_config = config_manager.get_model_trainer_config()
+    model_trainer_config = config_manager.get_training_config()
     
     # Brain Cancer Dataset has 3 classes (brain_glioma, brain_menin, brain_tumor)
     classes = 3
