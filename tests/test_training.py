@@ -5,6 +5,7 @@ from tensorflow.keras.models import load_model
 from cnnClassifier.config.configuration import ConfigurationManager
 from cnnClassifier.pipeline.prediction import PredictionPipeline
 from cnnClassifier.components.Model_Trainer import ModelTrainer
+from model_architecture.model1_architecture import build_model
 from cnnClassifier import logger
 
 
@@ -23,15 +24,17 @@ def test_data_validation_status():
 def test_model_architecture_compilation():
     config_manager = ConfigurationManager()
     model_trainer_config = config_manager.get_training_config()
-
+    
+    # Brain Cancer Dataset has 3 classes (brain_glioma, brain_menin, brain_tumor)
     classes = 3
+    
+    # Instantiate ModelTrainer so its config is passed as 'self' to build_model
     trainer = ModelTrainer(config=model_trainer_config)
+    model = build_model(trainer, num_classes=classes)
     
-    # Replace 'build_model' with whatever method name exists in ModelTrainer
-    model = trainer.build_model(num_classes=classes) 
-    
-    assert model is not None
-    assert model.output_shape == (None, classes)
+    assert model is not None, "Model failed to build."
+    assert model.output_shape == (None, classes), f"Expected output shape (None, {classes}), got {model.output_shape}"
+
 
 # 3. Inference Pipeline Sanity Check
 def test_prediction_pipeline_sanity():
