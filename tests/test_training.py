@@ -4,7 +4,7 @@ from pathlib import Path
 from tensorflow.keras.models import load_model
 from cnnClassifier.config.configuration import ConfigurationManager
 from cnnClassifier.pipeline.prediction import PredictionPipeline
-from cnnClassifier.components.model_trainer import ModelTrainer
+from cnnClassifier.components.Model_Trainer import ModelTrainer
 from cnnClassifier import logger
 
 
