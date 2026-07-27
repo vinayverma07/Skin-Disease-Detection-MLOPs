@@ -17,7 +17,7 @@ def build_model(self, num_classes: int) -> tf.keras.Model:
         base_model = tf.keras.applications.DenseNet121(
             include_top=False,
             weights='imagenet',
-            input_tensor=x,
+            input_tensor=inputs,
             pooling='avg'
         )
 
