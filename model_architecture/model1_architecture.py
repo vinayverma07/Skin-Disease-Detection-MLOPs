@@ -12,13 +12,15 @@ def build_model(self, num_classes: int) -> tf.keras.Model:
         inputs = layers.Input(shape=img_shape)
 
         # 1. Base Model & Preprocessing
-        x = tf.keras.applications.densenet.preprocess_input(inputs)
+        # Edited
+        # x = tf.keras.applications.densenet.preprocess_input(inputs)
         base_model = tf.keras.applications.DenseNet121(
             include_top=False,
             weights='imagenet',
             input_tensor=x,
             pooling='avg'
         )
+
 
         # Fine-tuning: make base model trainable
         base_model.trainable = True
